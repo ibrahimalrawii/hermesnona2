@@ -31,8 +31,7 @@ jobs:
 
       - name: Start Free Tunnel (Serveo)
         run: |
-          # هذه الأداة تعطيك أمر SSH جاهز ومباشر باللوغ (Logs)
-          nohup ssh -o StrictHostKeyChecking=no -R 22:localhost:22 serveo.net > serveo.log 2>&1 &
+          nohup ssh -o StrictHostKeyChecking=no -R 2222:localhost:22 serveo.net > serveo.log 2>&1 &
           sleep 5
           cat serveo.log
 
