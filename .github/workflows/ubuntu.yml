@@ -29,11 +29,17 @@ jobs:
           whoami
           echo "=========================================="
 
-      - name: Start Free Tunnel (Serveo)
+      - name: Install Bore Tunnel
         run: |
-          nohup ssh -o StrictHostKeyChecking=no -R 2222:localhost:22 serveo.net > serveo.log 2>&1 &
-          sleep 5
-          cat serveo.log
+          curl -sL https://github.com/ekzhang/bore/releases/download/v0.5.1/bore-v0.5.1-x86_64-unknown-linux-musl.tar.gz -o bore.tar.gz
+          tar -xvf bore.tar.gz
+          sudo mv bore /usr/local/bin/
+
+      - name: Start Tunnel (Bore)
+        run: |
+          nohup bore local 22 --to bore.pub > bore.log 2>&1 &
+          sleep 3
+          cat bore.log
 
       - name: Keep Server Alive
         run: |
