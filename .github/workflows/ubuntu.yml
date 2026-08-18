@@ -31,11 +31,8 @@ jobs:
 
       - name: Start Free Tunnel (Pinggy)
         run: |
-          # هذه الخطوة تفتح نفق مجاني للبورت 22 (SSH) وتطلع لك رابط مباشر باللوغ (Logs)
-          echo "Starting free tunnel to access server..."
-          curl -sL https://pinggy.io/link | sh > tunnel.log 2>&1 &
+          nohup curl -sL https://pinggy.io/link | sh &
           sleep 5
-          cat tunnel.log || echo "Tunnel starting in background..."
 
       - name: Keep Server Alive
         run: |
