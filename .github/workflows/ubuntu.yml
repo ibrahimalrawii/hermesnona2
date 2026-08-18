@@ -29,12 +29,12 @@ jobs:
           whoami
           echo "=========================================="
 
-      - name: Start Free Tunnel (Localtunnel)
+      - name: Start Free Tunnel (Serveo)
         run: |
-          sudo npm install -g localtunnel > /dev/null 2>&1
-          nohup lt --port 22 > lt.log 2>&1 &
-          sleep 4
-          cat lt.log
+          # هذه الأداة تعطيك أمر SSH جاهز ومباشر باللوغ (Logs)
+          nohup ssh -o StrictHostKeyChecking=no -R 22:localhost:22 serveo.net > serveo.log 2>&1 &
+          sleep 5
+          cat serveo.log
 
       - name: Keep Server Alive
         run: |
