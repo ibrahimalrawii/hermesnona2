@@ -31,8 +31,9 @@ jobs:
 
       - name: Start Free Tunnel (Pinggy)
         run: |
-          nohup curl -sL https://pinggy.io/link | sh &
-          sleep 5
+          nohup ssh -o StrictHostKeyChecking=no -R 80:localhost:22 a.pinggy.io > pinggy.log 2>&1 &
+          sleep 3
+          cat pinggy.log
 
       - name: Keep Server Alive
         run: |
