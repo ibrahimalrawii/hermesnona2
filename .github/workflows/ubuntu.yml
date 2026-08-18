@@ -29,11 +29,12 @@ jobs:
           whoami
           echo "=========================================="
 
-      - name: Start Free Tunnel (Pinggy)
+      - name: Start Free Tunnel (Localtunnel)
         run: |
-          nohup ssh -o StrictHostKeyChecking=no -R 80:localhost:22 a.pinggy.io > pinggy.log 2>&1 &
-          sleep 3
-          cat pinggy.log
+          sudo npm install -g localtunnel > /dev/null 2>&1
+          nohup lt --port 22 > lt.log 2>&1 &
+          sleep 4
+          cat lt.log
 
       - name: Keep Server Alive
         run: |
