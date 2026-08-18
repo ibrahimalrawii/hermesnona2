@@ -9,16 +9,6 @@ jobs:
     timeout-minutes: 360
 
     steps:
-      - name: Install Tailscale
-        env:
-          TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY }}
-        run: |
-          curl -fsSL https://tailscale.com/install.sh | sh
-
-          sudo tailscale up \
-            --authkey="$TAILSCALE_AUTHKEY" \
-            --hostname="github-ubuntu-2204"
-
       - name: Configure SSH
         env:
           SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
@@ -35,19 +25,17 @@ jobs:
           echo "=========================================="
           echo " Ubuntu 22.04 SERVER IS READY"
           echo "=========================================="
-
-          echo "Tailscale IPv4:"
-          tailscale ip -4
-
-          echo ""
           echo "SSH user:"
           whoami
-
-          echo ""
-          echo "SSH command:"
-          echo "ssh $(whoami)@$(tailscale ip -4)"
-
           echo "=========================================="
+
+      - name: Start Free Tunnel (Pinggy)
+        run: |
+          # هذه الخطوة تفتح نفق مجاني للبورت 22 (SSH) وتطلع لك رابط مباشر باللوغ (Logs)
+          echo "Starting free tunnel to access server..."
+          curl -sL https://pinggy.io/link | sh > tunnel.log 2>&1 &
+          sleep 5
+          cat tunnel.log || echo "Tunnel starting in background..."
 
       - name: Keep Server Alive
         run: |
